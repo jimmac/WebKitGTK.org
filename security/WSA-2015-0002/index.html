@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3584e4">
+
+  <title>WebKitGTK+ Security Advisory WSA-2015-0002</title>
+
+  <link rel="canonical" href="https://webkitgtk.org/security/WSA-2015-0002/" />
+  <link rel="alternate" type="application/rss+xml" title="WebKitGTK" href="https:&#x2F;&#x2F;webkitgtk.org/rss.xml" />
+  <link rel="alternate" type="application/atom+xml" title="WebKitGTK" href="https:&#x2F;&#x2F;webkitgtk.org/atom.xml" />
+
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;webkitgtk.org/style.css" />
+
+  <link rel="icon" type="image/svg+xml" href="https:&#x2F;&#x2F;webkitgtk.org/assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="https:&#x2F;&#x2F;webkitgtk.org/assets/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https:&#x2F;&#x2F;webkitgtk.org/assets/apple-touch-icon.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:title" content="WebKitGTK" />
+  <meta property="twitter:image" content="https:&#x2F;&#x2F;webkitgtk.org/assets/card.png" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:description" content="A WebKit port for the GTK library." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WebKitGTK" />
+  <meta property="og:url" content="https:&#x2F;&#x2F;webkitgtk.org" />
+  <meta property="og:description" content="A WebKit port for the GTK library." />
+  <meta property="og:image" content="https:&#x2F;&#x2F;webkitgtk.org/assets/card.png" />
+</head>
+
+  <body>
+    <header>
+  <h1 id="logo"><a href="https:&#x2F;&#x2F;webkitgtk.org/">WebKitGTK</a></h1>
+</header>
+
+    <div class="container">
+      
+<h2>WebKitGTK+ Security Advisory WSA-2015-0002</h2>
+<ul>
+<li>
+<p>Date Reported: <strong>December 28, 2015</strong></p>
+</li>
+<li>
+<p>Advisory ID: <strong>WSA-2015-0002</strong></p>
+</li>
+<li>
+<p>CVE identifiers: <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2013-6663">CVE-2013-6663</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-1748">CVE-2014-1748</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-3192">CVE-2014-3192</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4409">CVE-2014-4409</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4410">CVE-2014-4410</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4411">CVE-2014-4411</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4412">CVE-2014-4412</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4413">CVE-2014-4413</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4414">CVE-2014-4414</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4452">CVE-2014-4452</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4459">CVE-2014-4459</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4465">CVE-2014-4465</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4466">CVE-2014-4466</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4468">CVE-2014-4468</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4469">CVE-2014-4469</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4470">CVE-2014-4470</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4471">CVE-2014-4471</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4472">CVE-2014-4472</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4473">CVE-2014-4473</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4474">CVE-2014-4474</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4475">CVE-2014-4475</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4476">CVE-2014-4476</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4477">CVE-2014-4477</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2014-4479">CVE-2014-4479</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1068">CVE-2015-1068</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1069">CVE-2015-1069</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1070">CVE-2015-1070</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1071">CVE-2015-1071</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1072">CVE-2015-1072</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1073">CVE-2015-1073</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1074">CVE-2015-1074</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1075">CVE-2015-1075</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1076">CVE-2015-1076</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1077">CVE-2015-1077</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1080">CVE-2015-1080</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1081">CVE-2015-1081</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1082">CVE-2015-1082</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1083">CVE-2015-1083</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1084">CVE-2015-1084</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1119">CVE-2015-1119</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1120">CVE-2015-1120</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1121">CVE-2015-1121</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1122">CVE-2015-1122</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1124">CVE-2015-1124</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1126">CVE-2015-1126</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1127">CVE-2015-1127</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1152">CVE-2015-1152</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1153">CVE-2015-1153</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1154">CVE-2015-1154</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1155">CVE-2015-1155</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-1156">CVE-2015-1156</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-2330">CVE-2015-2330</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3658">CVE-2015-3658</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3659">CVE-2015-3659</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3660">CVE-2015-3660</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3727">CVE-2015-3727</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3730">CVE-2015-3730</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3731">CVE-2015-3731</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3732">CVE-2015-3732</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3733">CVE-2015-3733</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3734">CVE-2015-3734</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3735">CVE-2015-3735</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3736">CVE-2015-3736</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3737">CVE-2015-3737</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3738">CVE-2015-3738</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3739">CVE-2015-3739</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3740">CVE-2015-3740</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3741">CVE-2015-3741</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3742">CVE-2015-3742</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3743">CVE-2015-3743</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3744">CVE-2015-3744</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3745">CVE-2015-3745</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3746">CVE-2015-3746</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3747">CVE-2015-3747</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3748">CVE-2015-3748</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3749">CVE-2015-3749</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3750">CVE-2015-3750</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3751">CVE-2015-3751</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3752">CVE-2015-3752</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3753">CVE-2015-3753</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3754">CVE-2015-3754</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-3755">CVE-2015-3755</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5788">CVE-2015-5788</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5789">CVE-2015-5789</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5790">CVE-2015-5790</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5791">CVE-2015-5791</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5792">CVE-2015-5792</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5793">CVE-2015-5793</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5794">CVE-2015-5794</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5795">CVE-2015-5795</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5797">CVE-2015-5797</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5798">CVE-2015-5798</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5799">CVE-2015-5799</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5800">CVE-2015-5800</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5801">CVE-2015-5801</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5802">CVE-2015-5802</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5803">CVE-2015-5803</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5804">CVE-2015-5804</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5805">CVE-2015-5805</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5806">CVE-2015-5806</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5807">CVE-2015-5807</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5809">CVE-2015-5809</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5810">CVE-2015-5810</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5811">CVE-2015-5811</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5812">CVE-2015-5812</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5813">CVE-2015-5813</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5814">CVE-2015-5814</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5815">CVE-2015-5815</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5816">CVE-2015-5816</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5817">CVE-2015-5817</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5818">CVE-2015-5818</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5819">CVE-2015-5819</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5822">CVE-2015-5822</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5823">CVE-2015-5823</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5825">CVE-2015-5825</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5826">CVE-2015-5826</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5827">CVE-2015-5827</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5828">CVE-2015-5828</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5928">CVE-2015-5928</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5929">CVE-2015-5929</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5930">CVE-2015-5930</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-5931">CVE-2015-5931</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7002">CVE-2015-7002</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7012">CVE-2015-7012</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7013">CVE-2015-7013</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7014">CVE-2015-7014</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7048">CVE-2015-7048</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7095">CVE-2015-7095</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7097">CVE-2015-7097</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7099">CVE-2015-7099</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7100">CVE-2015-7100</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7102">CVE-2015-7102</a>,
+<a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7103">CVE-2015-7103</a>, <a href="https://webkitgtk.org/security/WSA-2015-0002/#CVE-2015-7104">CVE-2015-7104</a>.</p>
+</li>
+</ul>
+<p>Several vulnerabilities were discovered on WebKitGTK+.</p>
+<ul>
+<li>
+<p><a name="CVE-2013-6663" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6663">CVE-2013-6663</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.4.0.</li>
+<li>Credit to Atte Kettunen of OUSPG.</li>
+<li>Use-after-free vulnerability in the SVGImage::setContainerSize
+function in core/svg/graphics/SVGImage.cpp in the SVG implementation
+in Blink, as used in Google Chrome before 33.0.1750.146, allows
+remote attackers to cause a denial of service or possibly have
+unspecified other impact via vectors related to the resizing of a
+view.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-1748" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1748">CVE-2014-1748</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Jordan Milne.</li>
+<li>The ScrollView::paint function in platform/scroll/ScrollView.cpp in
+Blink, as used in Google Chrome before 35.0.1916.114, allows remote
+attackers to spoof the UI by extending scrollbar painting into the
+parent frame.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-3192" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3192">CVE-2014-3192</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.3.</li>
+<li>Credit to cloudfuzzer.</li>
+<li>Use-after-free vulnerability in the
+ProcessingInstruction::setXSLStyleSheet function in
+core/dom/ProcessingInstruction.cpp in the DOM implementation in
+Blink, as used in Google Chrome before 38.0.2125.101, allows remote
+attackers to cause a denial of service or possibly have unspecified
+other impact via unknown vectors.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4409" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4409">CVE-2014-4409</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Yosuke Hasegawa (NetAgent Co., Led.).</li>
+<li>WebKit in Apple iOS before 8 makes it easier for remote attackers to
+track users during private browsing via a crafted web site that
+reads HTML5 application-cache data that had been stored during
+normal browsing.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4410" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4410">CVE-2014-4410</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Eric Seidel of Google.</li>
+<li>WebKit, as used in Apple iOS before 8 and Apple TV before 7, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2014-09-17-1 and APPLE-SA-2014-09-17-2.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4411" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4411">CVE-2014-4411</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Google Chrome Security Team.</li>
+<li>WebKit, as used in Apple iOS before 8 and Apple TV before 7, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2014-09-17-1 and APPLE-SA-2014-09-17-2.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4412" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4412">CVE-2014-4412</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.4.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8 and Apple TV before 7, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2014-09-17-1 and APPLE-SA-2014-09-17-2.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4413" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4413">CVE-2014-4413</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.4.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8 and Apple TV before 7, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2014-09-17-1 and APPLE-SA-2014-09-17-2.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4414" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4414">CVE-2014-4414</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.4.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8 and Apple TV before 7, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2014-09-17-1 and APPLE-SA-2014-09-17-2.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4452" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4452">CVE-2014-4452</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple iOS before 8.1.1 and Apple TV before 7.0.2,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than CVE-2014-4462.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4459" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4459">CVE-2014-4459</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to unknown.</li>
+<li>Use-after-free vulnerability in WebKit, as used in Apple OS X before
+10.10.1, allows remote attackers to execute arbitrary code via
+crafted page objects in an HTML document.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4465" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4465">CVE-2014-4465</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to Rennie deGraaf of iSEC Partners.</li>
+<li>WebKit in Apple Safari before 6.2.1, 7.x before 7.1.1, and 8.x
+before 8.0.1 allows remote attackers to bypass the Same Origin
+Policy via crafted Cascading Style Sheets (CSS) token sequences
+within an SVG file in the SRC attribute of an IMG element.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4466" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4466">CVE-2014-4466</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4468" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4468">CVE-2014-4468</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4469" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4469">CVE-2014-4469</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4470" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4470">CVE-2014-4470</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4471" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4471">CVE-2014-4471</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4472" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4472">CVE-2014-4472</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4473" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4473">CVE-2014-4473</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4474" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4474">CVE-2014-4474</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4475" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4475">CVE-2014-4475</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.1, 7.x before 7.1.1, and
+8.x before 8.0.1, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2014-12-2-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4476" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4476">CVE-2014-4476</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.1.3; Apple Safari before
+6.2.3, 7.x before 7.1.3, and 8.x before 8.0.3; and Apple TV before
+7.0.3, allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2014-4477 and
+CVE-2014-4479.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4477" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4477">CVE-2014-4477</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.4.</li>
+<li>Credit to lokihardt@ASRT working with HP’s Zero Day Initiative.</li>
+<li>WebKit, as used in Apple iOS before 8.1.3; Apple Safari before
+6.2.3, 7.x before 7.1.3, and 8.x before 8.0.3; and Apple TV before
+7.0.3, allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2014-4476 and
+CVE-2014-4479.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2014-4479" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4479">CVE-2014-4479</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.1.3; Apple Safari before
+6.2.3, 7.x before 7.1.3, and 8.x before 8.0.3; and Apple TV before
+7.0.3, allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2014-4476 and
+CVE-2014-4477.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1068" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1068">CVE-2015-1068</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1069" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1069">CVE-2015-1069</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1070" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1070">CVE-2015-1070</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1071" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1071">CVE-2015-1071</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1072" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1072">CVE-2015-1072</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1073" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1073">CVE-2015-1073</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1074" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1074">CVE-2015-1074</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1075" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1075">CVE-2015-1075</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Google Chrome Security Team.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1076" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1076">CVE-2015-1076</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1077" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1077">CVE-2015-1077</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1080" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1080">CVE-2015-1080</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1081" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1081">CVE-2015-1081</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1082" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1082">CVE-2015-1082</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1083" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1083">CVE-2015-1083</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.4, 7.x before 7.1.4, and
+8.x before 8.0.4, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+CVEs listed in APPLE-SA-2015-03-17-1.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1084" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1084">CVE-2015-1084</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.1.</li>
+<li>Credit to Apple.</li>
+<li>The user interface in WebKit, as used in Apple Safari before 6.2.4,
+7.x before 7.1.4, and 8.x before 8.0.4, does not display URLs
+consistently, which makes it easier for remote attackers to conduct
+phishing attacks via a crafted URL.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1119" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1119">CVE-2015-1119</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Renata Hodovan of University of Szeged / Samsung
+Electronics.</li>
+<li>WebKit, as used in Apple iOS before 8.3, Apple TV before 7.2, and
+Apple Safari before 6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-04-08-1, APPLE-SA-2015-04-08-3, and APPLE-
+SA-2015-04-08-4.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1120" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1120">CVE-2015-1120</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.3, Apple TV before 7.2, and
+Apple Safari before 6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-04-08-1, APPLE-SA-2015-04-08-3, and APPLE-
+SA-2015-04-08-4.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1121" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1121">CVE-2015-1121</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.3, Apple TV before 7.2, and
+Apple Safari before 6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-04-08-1, APPLE-SA-2015-04-08-3, and APPLE-
+SA-2015-04-08-4.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1122" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1122">CVE-2015-1122</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.3, Apple TV before 7.2, and
+Apple Safari before 6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-04-08-1, APPLE-SA-2015-04-08-3, and APPLE-
+SA-2015-04-08-4.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1124" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1124">CVE-2015-1124</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.3, Apple TV before 7.2, and
+Apple Safari before 6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5,
+allows remote attackers to execute arbitrary code or cause a denial
+of service (memory corruption and application crash) via a crafted
+web site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-04-08-1, APPLE-SA-2015-04-08-3, and APPLE-
+SA-2015-04-08-4.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1126" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1126">CVE-2015-1126</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Jouko Pynnonen of Klikki Oy.</li>
+<li>WebKit, as used in Apple iOS before 8.3 and Apple Safari before
+6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5, does not properly
+handle the userinfo field in FTP URLs, which allows remote attackers
+to trigger incorrect resource access via unspecified vectors.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1127" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1127">CVE-2015-1127</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Tyler C (2.6.5).</li>
+<li>The private-browsing implementation in WebKit in Apple Safari before
+6.2.5, 7.x before 7.1.5, and 8.x before 8.0.5 places browsing
+history into an index, which might allow local users to obtain
+sensitive information by reading index entries.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1152" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1152">CVE-2015-1152</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 6.2.6, 7.x before 7.1.6, and
+8.x before 8.0.6, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than
+CVE-2015-1153 and CVE-2015-1154.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1153" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1153">CVE-2015-1153</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple (2.6.5).</li>
+<li>WebKit, as used in Apple Safari before 6.2.6, 7.x before 7.1.6, and
+8.x before 8.0.6, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than
+CVE-2015-1152 and CVE-2015-1154.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1154" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1154">CVE-2015-1154</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple (2.6.5).</li>
+<li>WebKit, as used in Apple Safari before 6.2.6, 7.x before 7.1.6, and
+8.x before 8.0.6, allows remote attackers to execute arbitrary code
+or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than
+CVE-2015-1152 and CVE-2015-1153.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1155" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1155">CVE-2015-1155</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Joe Vennix of Rapid7 Inc. working with HP's Zero Day
+Initiative.</li>
+<li>The history implementation in WebKit, as used in Apple Safari before
+6.2.6, 7.x before 7.1.6, and 8.x before 8.0.6, allows remote
+attackers to bypass the Same Origin Policy and read arbitrary files
+via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-1156" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1156">CVE-2015-1156</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Zachary Durber of Moodle.</li>
+<li>The page-loading implementation in WebKit, as used in Apple Safari
+before 6.2.6, 7.x before 7.1.6, and 8.x before 8.0.6, does not
+properly handle the rel attribute in an A element, which allows
+remote attackers to bypass the Same Origin Policy for a link's
+target, and spoof the user interface, via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-2330" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-2330">CVE-2015-2330</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.6.</li>
+<li>Credit to Ross Lagerwall.</li>
+<li>Late TLS certificate verification in WebKitGTK+ prior to 2.6.6
+allows remote attackers to view a secure HTTP request, including,
+for example, secure cookies.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3658" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3658">CVE-2015-3658</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Brad Hill of Facebook.</li>
+<li>The Page Loading functionality in WebKit in Apple Safari before
+6.2.7, 7.x before 7.1.7, and 8.x before 8.0.7, as used in Apple iOS
+before 8.4 and other products, does not properly consider redirects
+during decisions about sending an Origin header, which makes it
+easier for remote attackers to bypass CSRF protection mechanisms via
+a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3659" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3659">CVE-2015-3659</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Peter Rutenbar working with HP's Zero Day Initiative.</li>
+<li>The SQLite authorizer in the Storage functionality in WebKit in
+Apple Safari before 6.2.7, 7.x before 7.1.7, and 8.x before 8.0.7,
+as used in Apple iOS before 8.4 and other products, does not
+properly restrict access to SQL functions, which allows remote
+attackers to execute arbitrary code or cause a denial of service
+(application crash) via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3660" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3660">CVE-2015-3660</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>Cross-site scripting (XSS) vulnerability in the PDF functionality in
+WebKit in Apple Safari before 6.2.7, 7.x before 7.1.7, and 8.x
+before 8.0.7 allows remote attackers to inject arbitrary web script
+or HTML via a crafted URL in embedded PDF content.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3727" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3727">CVE-2015-3727</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Peter Rutenbar working with HP's Zero Day Initiative.</li>
+<li>WebKit in Apple Safari before 6.2.7, 7.x before 7.1.7, and 8.x
+before 8.0.7, as used in Apple iOS before 8.4 and other products,
+does not properly restrict rename operations on WebSQL tables, which
+allows remote attackers to access an arbitrary web site's database
+via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3730" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3730">CVE-2015-3730</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3731" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3731">CVE-2015-3731</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3732" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3732">CVE-2015-3732</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3733" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3733">CVE-2015-3733</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3734" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3734">CVE-2015-3734</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3735" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3735">CVE-2015-3735</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3736" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3736">CVE-2015-3736</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3737" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3737">CVE-2015-3737</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3738" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3738">CVE-2015-3738</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3739" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3739">CVE-2015-3739</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3740" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3740">CVE-2015-3740</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3741" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3741">CVE-2015-3741</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3742" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3742">CVE-2015-3742</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3743" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3743">CVE-2015-3743</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3744" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3744">CVE-2015-3744</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3745" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3745">CVE-2015-3745</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3746" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3746">CVE-2015-3746</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3747" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3747">CVE-2015-3747</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3748" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3748">CVE-2015-3748</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3749" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3749">CVE-2015-3749</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 8.4.1 and Safari before 6.2.8,
+7.x before 7.1.8, and 8.x before 8.0.8, allows remote attackers to
+execute arbitrary code or cause a denial of service (memory
+corruption and application crash) via a crafted web site, a
+different vulnerability than other WebKit CVEs listed in APPLE-
+SA-2015-08-13-1 and APPLE-SA-2015-08-13-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3750" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3750">CVE-2015-3750</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Muneaki Nishimura (nishimunea).</li>
+<li>WebKit in Apple Safari before 6.2.8, 7.x before 7.1.8, and 8.x
+before 8.0.8, as used in iOS before 8.4.1 and other products, does
+not enforce the HTTP Strict Transport Security (HSTS) protection
+mechanism for Content Security Policy (CSP) report requests, which
+allows man-in-the-middle attackers to obtain sensitive information
+by sniffing the network or spoof a report by modifying the client-
+server data stream.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3751" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3751">CVE-2015-3751</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Muneaki Nishimura (nishimunea).</li>
+<li>WebKit in Apple Safari before 6.2.8, 7.x before 7.1.8, and 8.x
+before 8.0.8, as used in iOS before 8.4.1 and other products, allows
+remote attackers to bypass a Content Security Policy protection
+mechanism by using a video control in conjunction with an IMG
+element within an OBJECT element.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3752" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3752">CVE-2015-3752</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.4.</li>
+<li>Credit to Muneaki Nishimura (nishimunea).</li>
+<li>The Content Security Policy implementation in WebKit in Apple Safari
+before 6.2.8, 7.x before 7.1.8, and 8.x before 8.0.8, as used in iOS
+before 8.4.1 and other products, does not properly restrict cookie
+transmission for report requests, which allows remote attackers to
+obtain sensitive information via vectors involving (1) a cross-
+origin request or (2) a private-browsing request.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3753" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3753">CVE-2015-3753</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Antonio Sanso and Damien Antipa of Adobe.</li>
+<li>WebKit in Apple Safari before 6.2.8, 7.x before 7.1.8, and 8.x
+before 8.0.8, as used in iOS before 8.4.1 and other products, does
+not properly perform taint checking for CANVAS elements, which
+allows remote attackers to bypass the Same Origin Policy and obtain
+sensitive image data by leveraging a redirect to a data:image
+resource.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3754" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3754">CVE-2015-3754</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Dongsung Kim (@kid1ng).</li>
+<li>The private-browsing implementation in WebKit in Apple Safari before
+6.2.8, 7.x before 7.1.8, and 8.x before 8.0.8 does not prevent
+caching of HTTP authentication credentials, which makes it easier
+for remote attackers to track users via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-3755" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3755">CVE-2015-3755</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to xisigr of Tencent's Xuanwu Lab.</li>
+<li>WebKit in Apple Safari before 6.2.8, 7.x before 7.1.8, and 8.x
+before 8.0.8, as used in iOS before 8.4.1 and other products, allows
+remote attackers to spoof the user interface via a malformed URL.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5788" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5788">CVE-2015-5788</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>The WebKit Canvas implementation in Apple iOS before 9 allows remote
+attackers to bypass the Same Origin Policy and obtain sensitive
+image information via vectors involving a CANVAS element.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5789" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5789">CVE-2015-5789</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.1.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5790" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5790">CVE-2015-5790</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.2.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5791" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5791">CVE-2015-5791</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5792" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5792">CVE-2015-5792</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.4.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5793" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5793">CVE-2015-5793</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5794" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5794">CVE-2015-5794</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5795" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5795">CVE-2015-5795</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5797" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5797">CVE-2015-5797</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5798" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5798">CVE-2015-5798</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iTunes before 12.3, allows man-in-the-
+middle attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via vectors
+related to iTunes Store browsing, a different vulnerability than
+other WebKit CVEs listed in APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5799" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5799">CVE-2015-5799</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple (2.6.5).</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5800" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5800">CVE-2015-5800</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple (2.6.5).</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5801" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5801">CVE-2015-5801</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5802" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5802">CVE-2015-5802</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5803" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5803">CVE-2015-5803</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5804" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5804">CVE-2015-5804</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5805" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5805">CVE-2015-5805</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5806" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5806">CVE-2015-5806</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5807" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5807">CVE-2015-5807</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5809" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5809">CVE-2015-5809</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5810" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5810">CVE-2015-5810</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5811" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5811">CVE-2015-5811</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5812" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5812">CVE-2015-5812</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5813" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5813">CVE-2015-5813</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5814" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5814">CVE-2015-5814</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5815" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5815">CVE-2015-5815</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iTunes before 12.3, allows man-in-the-
+middle attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via vectors
+related to iTunes Store browsing, a different vulnerability than
+other WebKit CVEs listed in APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5816" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5816">CVE-2015-5816</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5817" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5817">CVE-2015-5817</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5818" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5818">CVE-2015-5818</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5819" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5819">CVE-2015-5819</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9 and iTunes before 12.3, allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site, a different vulnerability than other WebKit CVEs listed in
+APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5822" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5822">CVE-2015-5822</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.1.</li>
+<li>Credit to Mark S. Miller of Google.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5823" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5823">CVE-2015-5823</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in JavaScriptCore in Apple iOS before 9 and iTunes
+before 12.3, allows remote attackers to execute arbitrary code or
+cause a denial of service (memory corruption and application crash)
+via a crafted web site, a different vulnerability than other WebKit
+CVEs listed in APPLE-SA-2015-09-16-1 and APPLE-SA-2015-09-16-3.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5825" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5825">CVE-2015-5825</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Yossi Oren et al. of Columbia University's Network
+Security Lab.</li>
+<li>WebKit in Apple iOS before 9 does not properly restrict the
+availability of Performance API times, which allows remote attackers
+to obtain sensitive information about the browser history, mouse
+movement, or network traffic via crafted JavaScript code.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5826" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5826">CVE-2015-5826</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.6.5.</li>
+<li>Credit to filedescriptior, Chris Evans.</li>
+<li>WebKit in Apple iOS before 9 does not properly select the cases in
+which a Cascading Style Sheets (CSS) document is required to have
+the text/css content type, which allows remote attackers to bypass
+the Same Origin Policy via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5827" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5827">CVE-2015-5827</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Gildas.</li>
+<li>WebKit in Apple iOS before 9 allows remote attackers to bypass the
+Same Origin Policy and obtain an object reference via vectors
+involving a (1) custom event, (2) message event, or (3) pop state
+event.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5828" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5828">CVE-2015-5828</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Lorenzo Fontana.</li>
+<li>The API in the WebKit Plug-ins component in Apple Safari before 9
+does not provide notification of an HTTP Redirection (aka 3xx)
+status code to a plugin, which allows remote attackers to bypass
+intended request restrictions via a crafted web site.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5928" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5928">CVE-2015-5928</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5929" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5929">CVE-2015-5929</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5930" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5930">CVE-2015-5930</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-5931" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5931">CVE-2015-5931</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple Safari before 9.0.1 and iTunes before
+12.3.1, allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than other WebKit CVEs
+listed in APPLE-SA-2015-10-21-3 and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7002" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7002">CVE-2015-7002</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7012" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7012">CVE-2015-7012</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.8.4.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7013" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7013">CVE-2015-7013</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit, as used in Apple Safari before 9.0.1 and iTunes before
+12.3.1, allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than other WebKit CVEs
+listed in APPLE-SA-2015-10-21-3 and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7014" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7014">CVE-2015-7014</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to unknown.</li>
+<li>WebKit, as used in Apple iOS before 9.1, Safari before 9.0.1, and
+iTunes before 12.3.1, allows remote attackers to execute arbitrary
+code or cause a denial of service (memory corruption and application
+crash) via a crafted web site, a different vulnerability than other
+WebKit CVEs listed in APPLE-SA-2015-10-21-1, APPLE-SA-2015-10-21-3,
+and APPLE-SA-2015-10-21-5.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7048" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7048">CVE-2015-7048</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7095,
+CVE-2015-7096, CVE-2015-7097, CVE-2015-7098, CVE-2015-7099,
+CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7095" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7095">CVE-2015-7095</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.2.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7096, CVE-2015-7097, CVE-2015-7098, CVE-2015-7099,
+CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7097" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7097">CVE-2015-7097</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.3.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7095, CVE-2015-7096, CVE-2015-7098, CVE-2015-7099,
+CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7099" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7099">CVE-2015-7099</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7098,
+CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7100" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7100">CVE-2015-7100</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7098,
+CVE-2015-7099, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7102" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7102">CVE-2015-7102</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7098,
+CVE-2015-7099, CVE-2015-7100, CVE-2015-7101, and CVE-2015-7103.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7103" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7103">CVE-2015-7103</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+9.1 allows remote attackers to execute arbitrary code or cause a
+denial of service (memory corruption and application crash) via a
+crafted web site, a different vulnerability than CVE-2015-7048,
+CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7098,
+CVE-2015-7099, CVE-2015-7100, CVE-2015-7101, and CVE-2015-7102.</li>
+</ul>
+</li>
+<li>
+<p><a name="CVE-2015-7104" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7104">CVE-2015-7104</a></p>
+<ul>
+<li>Versions affected: WebKitGTK+ before 2.10.0.</li>
+<li>Credit to Apple.</li>
+<li>WebKit in Apple Safari before 9.0.2 and tvOS before 9.1 allows
+remote attackers to execute arbitrary code or cause a denial of
+service (memory corruption and application crash) via a crafted web
+site.</li>
+</ul>
+</li>
+</ul>
+<p>We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.</p>
+<p>Further information about WebKitGTK+ Security Advisories can be found at:
+<a rel="external" href="https://webkitgtk.org/security.html">https://webkitgtk.org/security.html</a></p>
+
+<a href="javascript:window.history.go(-1);" class="inline-button">Go Back</a>
+
+    </div>
+    <footer>
+  <nav>
+    <ul class="bottomlinks">
+      
+      
+        
+        <li><a href="/">WebKitGTK Home</a></li>
+        
+      
+        
+        <li><a href="/news/">News</a></li>
+        
+      
+        
+        <li><a href="/security/">Security Advisories</a></li>
+        
+      
+        
+        <li><a href="/verifying/">Verifying Releases</a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/webkitgtk/stable">API Reference<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/jsc-glib/stable">JavaScriptCore<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/webkitgtk-web-process-extension/stable">WebProcessExtension<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a href="/releases/">Releases</a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://www.webkit.org/getting-started">Get Started<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://bugs.webkit.org/enter_bug.cgi?assigned_to=webkit-unassigned%40lists.webkit.org&attachurl=&blocked=&bug_file_loc=http://&bug_severity=Normal&bug_status=NEW&comment=&component=WebKit%20Gtk&contenttypeentry=&contenttypemethod=autodetect&contenttypeselection=text/plain&data=&dependson=&description=&flag_type-1=X&flag_type-3=X&flag_type-4=X&form_name=enter_bug&keywords=GTK&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=WebKit&rep_platform=PC&short_desc=%5BGTK%5D%20">File a Bug<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://planet.webkitgtk.org">Planet<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+      <li><span class="socials">
+        <a href="https://floss.social/@WebKitGTK" class="social" rel="me" aria-label="Mastodon"><svg viewBox="0 0 16 16" id="mastodon" xmlns="http://www.w3.org/2000/svg"><path d="M7.478 0C5.56.016 3.716.223 2.64.717c0 0-2.132.954-2.132 4.208 0 .745-.015 1.636.009 2.58.077 3.183.583 6.319 3.525 7.098 1.357.359 2.522.434 3.46.382 1.7-.094 2.656-.607 2.656-.607l-.057-1.234s-1.215.383-2.58.337c-1.353-.047-2.781-.146-3-1.807a3.406 3.406 0 0 1-.03-.466s1.328.325 3.01.402c1.03.047 1.994-.06 2.974-.177 1.88-.225 3.516-1.383 3.722-2.44.324-1.668.297-4.068.297-4.068 0-3.254-2.132-4.208-2.132-4.208C11.288.223 9.443.016 7.525 0Zm-2.17 2.542c.798 0 1.403.308 1.803.922l.389.651.389-.651c.4-.614 1.005-.922 1.803-.922.69 0 1.247.243 1.672.717.412.473.617 1.113.617 1.918v3.94H10.42V5.293c0-.806-.34-1.215-1.018-1.215-.75 0-1.126.485-1.126 1.445v2.093H6.724V5.523c0-.96-.376-1.445-1.126-1.445-.678 0-1.018.409-1.018 1.215v3.824H3.02v-3.94c0-.805.204-1.445.616-1.918.425-.474.981-.717 1.672-.717Z"/></svg></a>
+        <a href="https://github.com/WebKit/WebKit" class="social" aria-label="GitHub"><svg id="github" aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+        <a title="Matrix" href="https://matrix.to/#/%23webkitgtk:matrix.org" class="social"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 0 0-.18-.66 1.106 1.106 0 0 0-.438-.448c-.194-.11-.457-.166-.785-.166-.332 0-.6.064-.803.189a1.38 1.38 0 0 0-.48.499 1.946 1.946 0 0 0-.231.696 5.56 5.56 0 0 0-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 0 0-.143-.688 1.052 1.052 0 0 0-.415-.503c-.194-.125-.476-.19-.854-.19-.111 0-.259.024-.439.074-.18.051-.36.143-.53.282-.171.138-.319.337-.439.595-.12.259-.18.6-.18 1.02v4.966H5.46V7.81zm15.693 15.64V.55H21.72V0H24v24h-2.28v-.55z"></path></svg></a>
+      </span></li>
+    </ul>
+  </nav>
+  <p>&copy; WebKitGTK, 2009 &ndash; 2024<br>
+  <a href="https:&#x2F;&#x2F;github.com&#x2F;WebKitGTK&#x2F;webkitgtk.org">Website Source</a></p>
+</footer>
+
+  </body>
+</html>

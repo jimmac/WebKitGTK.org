@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3584e4">
+
+  <title>What&#x27;s new in WebKitGTK 2.46?</title>
+
+  <link rel="canonical" href="https://webkitgtk.org/news/webkitgtk-2.46/" />
+  <link rel="alternate" type="application/rss+xml" title="WebKitGTK" href="https:&#x2F;&#x2F;webkitgtk.org/rss.xml" />
+  <link rel="alternate" type="application/atom+xml" title="WebKitGTK" href="https:&#x2F;&#x2F;webkitgtk.org/atom.xml" />
+
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;webkitgtk.org/style.css" />
+
+  <link rel="icon" type="image/svg+xml" href="https:&#x2F;&#x2F;webkitgtk.org/assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="https:&#x2F;&#x2F;webkitgtk.org/assets/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https:&#x2F;&#x2F;webkitgtk.org/assets/apple-touch-icon.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:title" content="WebKitGTK" />
+  <meta property="twitter:image" content="https:&#x2F;&#x2F;webkitgtk.org/assets/card.png" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:description" content="A WebKit port for the GTK library." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WebKitGTK" />
+  <meta property="og:url" content="https:&#x2F;&#x2F;webkitgtk.org" />
+  <meta property="og:description" content="A WebKit port for the GTK library." />
+  <meta property="og:image" content="https:&#x2F;&#x2F;webkitgtk.org/assets/card.png" />
+</head>
+
+  <body>
+    <header>
+  <h1 id="logo"><a href="https:&#x2F;&#x2F;webkitgtk.org/">WebKitGTK</a></h1>
+</header>
+
+    <div class="container">
+      
+<h2>What&#x27;s new in WebKitGTK 2.46?</h2>
+<p>A couple of weeks ago the WebKitGTK team released version 2.46 of the <a rel="external" href="https://gtk.org">GTK</a> port of the <a rel="external" href="https://webkit.org">WebKit</a> project. While 2.44 was a significant release (making GTK4 the default toolkit for WebKitGTK), once again 2.46 marks an important milestone for the project, with the introduction of the new Skia rendering backend. Let's have a look at what is new in this exciting release.</p>
+<h3 id="skia-replaces-cairo-as-the-rendering-backend">Skia replaces Cairo as the rendering backend</h3>
+<p>We <a rel="external" href="https://blogs.igalia.com/carlosgc/2024/02/19/webkit-switching-to-skia-for-2d-graphics-rendering/">announced</a> some time ago that a new rendering backend with <a rel="external" href="https://skia.org">Skia</a> was on the works and that it will eventually replace Cairo. This release series is the first where Skia is used, bringing important improvements in rendering and performance. Depending on hardware configurations, we have observed <a rel="external" href="https://browserbench.org/MotionMark1.3.1/">MotionMark</a> score improvements up to four times better (4x) on powerful desktops with discrete GPUs, and low-end laptops, using integrated GPUs, managing to double (2x) their scores.</p>
+<figure>
+  <img src="/images/wkgtk-2.46-motionmark-cairo-skia.svg"
+       style="width: 90%"
+       alt="Bar chart with MotionMark scores: one for Skia at 617.42 points, another for Cairo at 162.57"/>
+  <figcaption>Scores for WebKitGTK 2.46.1 running on Linux, AMD Epyc 7281 CPU with a Radeon RX 560 GPU.</figcaption>
+</figure>
+<details>
+  <summary>Scores may vary!</summary>
+  <div>
+    <p>Performance measurements are <em>highly-dependant</em> on the hardware where they run and how WebKit was built. The figures above are from one particular setup. The speedup that the switch to Skia will give <em>you</em> are expected to be, of course, different!</p>
+<pre><code>&lt;h4&gt;WebKit Build&lt;/h4&gt;
+
+&lt;p&gt;Clang is recommended by the Skia developers, so version 18.1.8 was used with &lt;abbr title=&quot;Link-Time Optimization&quot;&gt;LTO&lt;/abbr&gt; optimization options, &lt;abbr title=&quot;Identical Code Folding&quot;&gt;ICF&lt;/abbr&gt;, and &lt;code&gt;-march=x86-64-v3&lt;/code&gt;. This is representative of common compiler options that packagers use.&lt;/p&gt;
+
+&lt;p&gt;WebKitGTK was built from the &lt;a href=&quot;https://webkitgtk.org/2024/09/30/webkitgtk2.46.1-released.html&quot;&gt;official 2.46.1 release&lt;/a&gt; tarball, using the following CMake invocation:&lt;/p&gt;
+</code></pre>
+<pre>
+OPT='-flto=thin -march=x86-64-v3'
+LDOPT='-flto=thin -Wl,-O1,--sort-common,--icf=safe'
+
+CC=clang \
+CXX=clang++ \
+CFLAGS="$OPT -fdata-sections -ffunction-sections" \
+CXXFLAGS="$OPT -fdata-sections -ffunction-sections" \
+LDFLAGS="$LDOPT -fuse-ld=lld -Wl,--gc-sections" \
+cmake -Bbuilddir -DPORT=GTK \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=$HOME/.prefix/gtk4cairo
+    -GNinja
+</pre>
+<pre><code>&lt;p&gt;The same was used for the Cairo build, adding &lt;code&gt;-DUSE_SKIA=OFF&lt;/code&gt;, and changing the installation path.&lt;/p&gt;
+
+&lt;h4&gt;Hardware&lt;/h4&gt;
+
+&lt;p&gt;The box used is a rather beefy desktop computer, although a few years old by now, which showed scores 3.8x better with Skia:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Dual AMD Epyc 7281 processor at 2.1 GHz (32 cores, 64 SMT threads).&lt;/li&gt;
+  &lt;li&gt;AMD Radeon RX 560 GPU with 4 GiB of video memory.&lt;/li&gt;
+  &lt;li&gt;128 GiB of system memory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We also tested on an aging laptop with the following specifications, which achieved scores 2.65x better with Skia:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Intel Skylake Core i7-6600U processor at 2.6 GHz (2 cores, 4 SMT threads).&lt;/li&gt;
+  &lt;li&gt;Intel HD Graphics 520 integrated GPU.&lt;/li&gt;
+  &lt;li&gt;20 GiB of system memory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The result from this second computer is the reason why we are confident that any reasonably recent desktop or laptop should get a good performance boost with this WebKitGTK release.&lt;/p&gt;
+</code></pre>
+  </div>
+</details>
+<p>The Cairo backend is still present and will be selected automatically at build time for big-endian architectures, where Skia is not yet supported. We plan to remove support for Cairo in the near future, and this approach allows us to ship the new renderer while solving the remaining issues. At any rate, the Cairo renderer is no longer receiving active development.</p>
+<p>It is important to notice that it is recommended to build WebKitGTK with Clang instead of GCC. This recommendation comes from upstream Skia; see their <a rel="external" href="https://skia.org/docs/user/build/#supported-and-preferred-compilers">supported and preferred compilers page</a> for details.</p>
+<h3 id="revamped-graphics-stack">Revamped graphics stack</h3>
+<p>Tha switch to Skia has made possible a significant number of changes and improvements in the WebKit graphics stack. These changes relate to accelerated canvas, accelerated CSS filters, color spaces, and more. <a rel="external" href="https://blogs.igalia.com/carlosgc/2024/09/27/graphics-improvements-in-webkitgtk-and-wpewebkit-2-46/">Carlos García has written extensively about these changes</a> in his blog, we recommend reading his article for more details.</p>
+<h3 id="trace-point-profiling-with-sysprof">Trace point profiling with sysprof</h3>
+<p><a rel="external" href="https://www.sysprof.com/">Sysprof</a> is a profiling and performance analysis tool for Linux. Thanks to integration with the <code>libsysprof-capture</code> library, it is now possible to use Sysprof to record trace points to do profiling and performance analysis of WebKit internals. This is a major improvement that will allow us to more effectively analyze the code paths that are more performance-sensitive and find ways to optimize them. It will also allow vendors to profile their specific hardware configurations and specific use-cases as well.</p>
+<p>For a more in-depth presentation of the integration with Sysprof, please read <a rel="external" href="https://feaneron.com/2024/07/12/profiling-a-web-engine/">Georges Stavacras' blog post on the topic</a>.</p>
+<h3 id="api-changes">API changes</h3>
+<p>Additions:</p>
+<ul>
+<li><a rel="external" href="https://webkitgtk.org/reference/webkitgtk/unstable/method.Settings.apply_from_key_file.html"><code>webkit_settings_apply_from_key_file()</code></a> allows applying WebKit settings directly from a key file</li>
+<li>The console message API, which had been previously deprecated, has been brought to the current API</li>
+<li><a rel="external" href="https://webkitgtk.org/reference/webkitgtk/2.46.0/signal.AutomationSession.will-close.html"><code>WebKitAutomationSession::will-close</code></a> signal, which allows clients to perform cleanup tasks before an automation session is closed</li>
+<li><a rel="external" href="https://webkitgtk.org/reference/webkitgtk/2.46.0/property.Settings.enable-2d-canvas-acceleration.html"><code>enable-2d-canvas-acceleration</code></a> WebSetting can be used to control 2D-canvas acceleration in Skia-enabled builds</li>
+</ul>
+<p>Deprecations:</p>
+<ul>
+<li><code>WebKitWebView::insecure-content-detected</code> signal.</li>
+<li><code>WebKitWebContext:use-system-appearance-for-scrollbars</code> property.</li>
+<li><code>webkit_web_context_set_use_system_appearance_for_scrollbars()</code> and <code>webkit_web_context_get_use_system_appearance_for_scrollbars()</code>.</li>
+</ul>
+<p>Changes:</p>
+<ul>
+<li>The non-standard <code>HTMLDocument</code> functions <code>width()</code> and <code>height()</code> have been removed, so now the DOM API functions <code>webkit_dom_html_document_get_width()</code> and <code>webkit_dom_html_document_get_height()</code> always return zero. The DOM API has been deprecated for many years and the change is expected to have little impact.</li>
+</ul>
+<h3 id="web-platform-changes">Web Platform changes</h3>
+<p>The changes to supported Web Platform features between releases of WebKit are always substantial, and for that reason listing all of those changes here would be a major endeavour. The following is an incomplete list of some of the features that have been enabled, removed, and marked in preview state since 2.44, in no particular order:</p>
+<ul>
+<li>CSS Container/Style Queries</li>
+<li>CSS <code>text-wrap-style</code></li>
+<li>CSS <code>background-clip: border-area</code></li>
+<li>CSS <code>text-underline-position: left|right</code></li>
+<li>CSS <code>scrollbar-width</code></li>
+<li>CSS View Transitions</li>
+<li>CSS Grid Masonry layout (preview)</li>
+<li>CSS <code>::target-text</code> pseudo element</li>
+<li>WebCrypto X25519 algorithm (preview)</li>
+<li>AppCache support has been removed</li>
+<li>New <code>Promise.try()</code> method</li>
+<li>New <code>Observable</code> methods, like <code>.map()</code> and <code>.filter()</code></li>
+</ul>
+<h3 id="other-noteworthy-changes">Other noteworthy changes</h3>
+<ul>
+<li>Accelerated Compositing is now enabled by default in layout tests. Previously, AC mode would be enabled on-demand, and that behaviour can still be configured through the API.</li>
+<li>The screensaver should not be triggered anymore when watching videos.</li>
+<li>The Web Inspector gained support for loading JavaScript garbage collector snapshots for inspection.</li>
+<li>Suport for the WebP image format is now always enabled.</li>
+<li>WebDriver clients may now connect to an already running process, instead of always needing to spawn a new one.</li>
+<li>The <code>gst-libav</code> AAC decoders are now disabled due to outstanding bugs. Distributors are encouraged to use the GStreamer FDK AAC decoder (part of <code>gst-plugins-bad</code>) instead.</li>
+</ul>
+<hr />
+<p>On top of all of the above, there are countless bug fixes and improvements to WebKit, so many that it would be impossible to list them all here. For more details, you can always check the release notes for the 2.45.x release series from the <a rel="external" href="https://webkitgtk.org/news.html">news section</a> and the Git commit history.</p>
+<p>The WebKitGTK team is already working on 2.48, which will be even more awesome. Until then!</p>
+
+<a href="javascript:window.history.go(-1);" class="inline-button">Go Back</a>
+
+    </div>
+    <footer>
+  <nav>
+    <ul class="bottomlinks">
+      
+      
+        
+        <li><a href="/">WebKitGTK Home</a></li>
+        
+      
+        
+        <li><a href="/news/">News</a></li>
+        
+      
+        
+        <li><a href="/security/">Security Advisories</a></li>
+        
+      
+        
+        <li><a href="/verifying/">Verifying Releases</a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/webkitgtk/stable">API Reference<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/jsc-glib/stable">JavaScriptCore<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://webkitgtk.org/reference/webkitgtk-web-process-extension/stable">WebProcessExtension<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a href="/releases/">Releases</a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://www.webkit.org/getting-started">Get Started<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://bugs.webkit.org/enter_bug.cgi?assigned_to=webkit-unassigned%40lists.webkit.org&attachurl=&blocked=&bug_file_loc=http://&bug_severity=Normal&bug_status=NEW&comment=&component=WebKit%20Gtk&contenttypeentry=&contenttypemethod=autodetect&contenttypeselection=text/plain&data=&dependson=&description=&flag_type-1=X&flag_type-3=X&flag_type-4=X&form_name=enter_bug&keywords=GTK&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=WebKit&rep_platform=PC&short_desc=%5BGTK%5D%20">File a Bug<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+        
+        <li><a class="extlink" href="https://planet.webkitgtk.org">Planet<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12"><path fill="currentColor" d="M4.5 2h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V3.7L4.2 11.3a.5.5 0 1 1-.7-.7L11.3 3H4.5a.5.5 0 0 1 0-1z"/></svg></a></li>
+        
+      
+      <li><span class="socials">
+        <a href="https://floss.social/@WebKitGTK" class="social" rel="me" aria-label="Mastodon"><svg viewBox="0 0 16 16" id="mastodon" xmlns="http://www.w3.org/2000/svg"><path d="M7.478 0C5.56.016 3.716.223 2.64.717c0 0-2.132.954-2.132 4.208 0 .745-.015 1.636.009 2.58.077 3.183.583 6.319 3.525 7.098 1.357.359 2.522.434 3.46.382 1.7-.094 2.656-.607 2.656-.607l-.057-1.234s-1.215.383-2.58.337c-1.353-.047-2.781-.146-3-1.807a3.406 3.406 0 0 1-.03-.466s1.328.325 3.01.402c1.03.047 1.994-.06 2.974-.177 1.88-.225 3.516-1.383 3.722-2.44.324-1.668.297-4.068.297-4.068 0-3.254-2.132-4.208-2.132-4.208C11.288.223 9.443.016 7.525 0Zm-2.17 2.542c.798 0 1.403.308 1.803.922l.389.651.389-.651c.4-.614 1.005-.922 1.803-.922.69 0 1.247.243 1.672.717.412.473.617 1.113.617 1.918v3.94H10.42V5.293c0-.806-.34-1.215-1.018-1.215-.75 0-1.126.485-1.126 1.445v2.093H6.724V5.523c0-.96-.376-1.445-1.126-1.445-.678 0-1.018.409-1.018 1.215v3.824H3.02v-3.94c0-.805.204-1.445.616-1.918.425-.474.981-.717 1.672-.717Z"/></svg></a>
+        <a href="https://github.com/WebKit/WebKit" class="social" aria-label="GitHub"><svg id="github" aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+        <a title="Matrix" href="https://matrix.to/#/%23webkitgtk:matrix.org" class="social"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 0 0-.18-.66 1.106 1.106 0 0 0-.438-.448c-.194-.11-.457-.166-.785-.166-.332 0-.6.064-.803.189a1.38 1.38 0 0 0-.48.499 1.946 1.946 0 0 0-.231.696 5.56 5.56 0 0 0-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 0 0-.143-.688 1.052 1.052 0 0 0-.415-.503c-.194-.125-.476-.19-.854-.19-.111 0-.259.024-.439.074-.18.051-.36.143-.53.282-.171.138-.319.337-.439.595-.12.259-.18.6-.18 1.02v4.966H5.46V7.81zm15.693 15.64V.55H21.72V0H24v24h-2.28v-.55z"></path></svg></a>
+      </span></li>
+    </ul>
+  </nav>
+  <p>&copy; WebKitGTK, 2009 &ndash; 2024<br>
+  <a href="https:&#x2F;&#x2F;github.com&#x2F;WebKitGTK&#x2F;webkitgtk.org">Website Source</a></p>
+</footer>
+
+  </body>
+</html>
