@@ -27,7 +27,7 @@ jobs:
       - name: Install Zola
         uses: taiki-e/install-action@v2
         with:
-          tool: zola@0.20.0
+          tool: zola@0.23.1
 
       - name: Build site
         run: zola build --base-url https://jimmac.github.io/WebKitGTK.org/
